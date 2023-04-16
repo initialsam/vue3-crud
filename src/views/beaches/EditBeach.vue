@@ -3,6 +3,17 @@ import axios from "axios";
 import { reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
+import { storeToRefs } from "pinia";
+import { useCounterStore } from "../../stores/counter.js";
+
+const store = useCounterStore();
+const { increment } = store;
+const { count, doubleCount } = storeToRefs(store);
+
+const clickAdd = () => {
+  increment();
+};
+
 let beachToUpdate = reactive({
   id: 0,
   beachName: "",
@@ -61,7 +72,10 @@ const updateBeach = () => {
           id="txtImageUrl"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <h3>{{ count }}</h3>
+      <h5>{{ doubleCount }}</h5>
+      <button type="button" @click="clickAdd">B</button>
     </form>
   </div>
 </template>
